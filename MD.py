@@ -32,16 +32,16 @@ class MD:
             return self.hash123(self.bytes_output)
             
     def F (self):
-        return (self.B and self.C) or (not self.B and self.D)
+        return (self.B & self.C) | (~ self.B & self.D)
     
     def G (self):
-        return (self.B and Self.D) or (self.C and not self.D)
+        return (self.B & self.D) | (self.C & ~ self.D)
     
     def H (self):
         return self.B ^ self.C ^ self.D
         
     def I (self):
-        return self.C ^(self.B or not self.D)
+        return self.C ^(self.B | ~ self.D)
     
     def hash123(self, arr):   
         #first level of incryption
@@ -49,7 +49,7 @@ class MD:
             for j in range(1, 4):
                 self.A += self.F()
                 self.A += arr[i][j]
-                self.A += math.fabs(math.sin(i+1))*2**32
+                self.A += int(abs(math.sin(i+1))*2**32)
                 if i == 1 or i == 5 or i == 9 or i == 13:
                     self.A << 7
                 if i == 2 or i == 6 or i == 10 or i == 14:
@@ -68,7 +68,7 @@ class MD:
             for j in range(1, 4):
                 self.A += self.G()
                 self.A += arr[self.input_array_iteration_two[i-17]][j]
-                self.A += math.fabs(math.sin(i+1))*2**32
+                self.A += int(abs(math.sin(i+1))*2**32)
                 if i == 17 or i == 21 or i == 25 or i == 29:
                     self.A << 5
                 if i == 18 or i == 22 or i == 26 or i == 30:
@@ -87,7 +87,7 @@ class MD:
             for j in range(1, 4):
                 self.A += self.H()
                 self.A += arr[self.input_array_iteration_three[i-33]][j]
-                self.A += math.fabs(math.sin(i+1))*2**32
+                self.A += int(abs(math.sin(i+1))*2**32)
                 if i == 33 or i == 37 or i == 41 or i == 45:
                     self.A << 4
                 if i == 34 or i == 38 or i == 42 or i == 46:
@@ -106,7 +106,7 @@ class MD:
             for j in range(1, 4):
                 self.A += self.I()
                 self.A += arr[self.input_array_iteration_four[i-49]][j]
-                self.A += math.fabs(math.sin(i+1))*(2**32)
+                self.A += int(abs(math.sin(i+1))*(2**32))
                 if i == 49 or i == 53 or i == 57 or i == 61:
                     self.A << 6
                 if i == 50 or i == 54 or i == 58 or i == 62:
