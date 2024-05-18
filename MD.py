@@ -120,12 +120,12 @@ class MD:
                 self.D = self.A
                 
         # final steps!
-            self.A = (self.A + 19088743) % self.C
-            self.B = (self.B + 2309737967) % self.C
-            self.C = (self.C + 4275878552) % self.C
-            self.D = (self.D + 1985229328) % self.C
-            
-            return hex(self.A+self.B+self.C+self.D)
+        self.A = (self.A + 19088743) % self.C
+        self.B = (self.B + 2309737967) % self.C
+        self.C = (self.C + 4275878552) % self.C
+        self.D = (self.D + 1985229328) % self.C
+        
+        return hex(self.A+self.B+self.C+self.D)
 string = input()
 md=MD(string)
 print(md.bytes())
