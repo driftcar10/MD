@@ -17,7 +17,7 @@ class MD:
         self.bytes_output = bytearray(self.input_str, "ascii")
 
         if len(self.bytes_original) > 56:
-            pass # hash the string straight away
+            # hash the string straight away
             return
         else:
             zeros = 56 - len(self.bytes_original) + 6
@@ -28,7 +28,6 @@ class MD:
             self.bytes_output.append(len(self.length))
             
             self.bytes_output = numpy.array_split(self.bytes_output, 16)
-            
             return self.hash123(self.bytes_output)
             
     def F (self):
@@ -43,12 +42,12 @@ class MD:
     def I (self):
         return self.C ^(self.B | ~ self.D)
     
-    def hash123(self, arr):   
+    def hash123(self, arr):
         #first level of incryption
         for i in range(1, 16):
             for j in range(1, 4):
                 self.A += self.F()
-                self.A += arr[i][j]
+                self.A += int(arr[i][j])
                 self.A += int(abs(math.sin(i+1))*2**32)
                 if i == 1 or i == 5 or i == 9 or i == 13:
                     self.A << 7
@@ -67,7 +66,7 @@ class MD:
         for i in range(17, 32):
             for j in range(1, 4):
                 self.A += self.G()
-                self.A += arr[self.input_array_iteration_two[i-17]][j]
+                self.A += int(arr[self.input_array_iteration_two[i-17]][j])
                 self.A += int(abs(math.sin(i+1))*2**32)
                 if i == 17 or i == 21 or i == 25 or i == 29:
                     self.A << 5
@@ -86,7 +85,7 @@ class MD:
         for i in range(33, 48):
             for j in range(1, 4):
                 self.A += self.H()
-                self.A += arr[self.input_array_iteration_three[i-33]][j]
+                self.A += int(arr[self.input_array_iteration_three[i-33]][j])
                 self.A += int(abs(math.sin(i+1))*2**32)
                 if i == 33 or i == 37 or i == 41 or i == 45:
                     self.A << 4
@@ -105,7 +104,7 @@ class MD:
         for i in range(49, 64):
             for j in range(1, 4):
                 self.A += self.I()
-                self.A += arr[self.input_array_iteration_four[i-49]][j]
+                self.A += int(arr[self.input_array_iteration_four[i-49]][j])
                 self.A += int(abs(math.sin(i+1))*(2**32))
                 if i == 49 or i == 53 or i == 57 or i == 61:
                     self.A << 6
